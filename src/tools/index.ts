@@ -1,11 +1,9 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { 
+import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-  Tool,
   TextContent,
-  ImageContent,
-  EmbeddedResource,
+  Tool
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { JamfApiClientHybrid as JamfApiClient } from '../jamf-client-hybrid.js';

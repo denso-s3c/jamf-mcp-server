@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__jamf-pro__getDevicesBatch",
+      "mcp__jamf-pro__getDeviceDetails",
+      "Bash(npm run build:*)",
+      "mcp__jamf-pro__searchDevices",
+      "mcp__jamf-pro__getComputerApplicationUsage"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "jamf-pro"
+  ]
+}

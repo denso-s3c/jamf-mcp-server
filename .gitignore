@@ -79,3 +79,6 @@ pids
 *.pid
 *.seed
 *.pid.lock
+
+# local mcp config
+.mcp.json

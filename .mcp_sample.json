@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "jamf-pro": {
+      "command": "node",
+      "args": ["<your path to jamf-mcp-server>/dist/index.js"],
+      "env": {
+        "JAMF_URL": "<your jamf pro url>",
+        "JAMF_CLIENT_ID": "<your jamf client id>",
+        "JAMF_CLIENT_SECRET": "<your jamf client secret>",
+        "JAMF_READ_ONLY": "true"
+      }
+    }
+  }
+}
