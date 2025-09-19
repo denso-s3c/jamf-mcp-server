@@ -380,6 +380,28 @@ export class JamfApiClientHybrid {
   }
 
   /**
+   * Get computer application usage data
+   */
+  async getComputerApplicationUsage(id: string, startDate: string, endDate: string): Promise<any[]> {
+    await this.ensureAuthenticated();
+    
+    try {
+      // Use Classic API endpoint for application usage
+      console.error(`Getting application usage for computer ${id} from ${startDate} to ${endDate} using Classic API...`);
+      const response = await this.axiosInstance.get(`/JSSResource/computerapplicationusage/id/${id}/${startDate}_${endDate}`);
+      
+      // The Classic API returns data in format: { computer_application_usage: [...] }
+      // Extract the actual usage data array
+      const usageData = response.data.computer_application_usage || [];
+      
+      return usageData;
+    } catch (error) {
+      console.error(`Failed to get application usage for computer ${id}:`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Get all computers (for compatibility)
    */
   async getAllComputers(limit: number = 1000): Promise<any[]> {

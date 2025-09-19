@@ -17,6 +17,12 @@ const GetDeviceDetailsSchema = z.object({
   deviceId: z.string().describe('The Jamf device ID'),
 });
 
+const GetComputerApplicationUsageSchema = z.object({
+  deviceId: z.string().describe('The computer ID to get application usage for'),
+  startDate: z.string().describe('Start date in YYYY-MM-DD format'),
+  endDate: z.string().describe('End date in YYYY-MM-DD format'),
+});
+
 const UpdateInventorySchema = z.object({
   deviceId: z.string().describe('The device ID to update inventory for'),
 });
@@ -472,6 +478,28 @@ export function registerTools(server: Server, jamfClient: any): void {
             },
           },
           required: ['deviceId'],
+        },
+      },
+      {
+        name: 'getComputerApplicationUsage',
+        description: 'Get application usage data for a specific computer within a date range',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            deviceId: {
+              type: 'string',
+              description: 'The computer ID to get application usage for',
+            },
+            startDate: {
+              type: 'string',
+              description: 'Start date in YYYY-MM-DD format',
+            },
+            endDate: {
+              type: 'string',
+              description: 'End date in YYYY-MM-DD format',
+            },
+          },
+          required: ['deviceId', 'startDate', 'endDate'],
         },
       },
       {
@@ -1853,6 +1881,30 @@ export function registerTools(server: Server, jamfClient: any): void {
           const content: TextContent = {
             type: 'text',
             text: JSON.stringify(formatted, null, 2),
+          };
+
+          return { content: [content] };
+        }
+
+        case 'getComputerApplicationUsage': {
+          const { deviceId, startDate, endDate } = GetComputerApplicationUsageSchema.parse(args);
+          const usageData = await jamfClient.getComputerApplicationUsage(deviceId, startDate, endDate);
+          
+          const content: TextContent = {
+            type: 'text',
+            text: JSON.stringify({
+              deviceId,
+              dateRange: `${startDate} to ${endDate}`,
+              usageData: usageData.map((item: any) => ({
+                date: item.date,
+                applications: (item.apps || []).map((appData: any) => ({
+                  name: appData.name,
+                  version: appData.version,
+                  foregroundMinutes: appData.foreground,
+                  openMinutes: appData.open,
+                })),
+              })),
+            }, null, 2),
           };
 
           return { content: [content] };
