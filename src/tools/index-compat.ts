@@ -1830,6 +1830,8 @@ export function registerTools(server: Server, jamfClient: any): void {
                                  device.general?.remoteManagement?.managementUsername,
               serialNumber: device.general?.serial_number || device.general?.serialNumber,
               lastContactTime: device.general?.last_contact_time || device.general?.lastContactTime,
+              lastLoggedInUser: device.general?.lastLoggedInUsernameBinary,
+              lastLoggedInUserTimestamp: device.general?.lastLoggedInUsernameBinaryTimestamp,
             },
             hardware: {
               model: device.hardware?.model,
