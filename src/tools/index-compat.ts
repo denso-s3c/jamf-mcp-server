@@ -1868,6 +1868,7 @@ export function registerTools(server: Server, jamfClient: any): void {
               totalRamMB: device.hardware?.total_ram || device.hardware?.totalRamMegabytes,
               batteryPercent: device.hardware?.battery_capacity || device.hardware?.batteryCapacityPercent,
               appleSilicon: device.hardware?.apple_silicon || device.hardware?.appleSilicon,
+              serialNumber: device.general?.serial_number || device.general?.serialNumber || device.hardware?.serial_number || device.hardware?.serialNumber,
             },
             userAndLocation: {
               username: device.location?.username || device.userAndLocation?.username,
